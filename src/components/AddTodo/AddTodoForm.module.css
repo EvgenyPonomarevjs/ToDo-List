@@ -1,0 +1,9 @@
+.AddTodoForm {
+    display: flex;
+    flex: 1;
+    margin-top: 24px;
+
+}
+.btm {
+    margin-left: 13px;
+}
