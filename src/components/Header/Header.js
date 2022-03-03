@@ -5,7 +5,7 @@ function App() {
     return (
         <Row>
             <Col>
-                <div className={s.root}>Todo list</div>
+                <div className={s.root}>Создай свой список задач</div>
             </Col>
         </Row>
 
