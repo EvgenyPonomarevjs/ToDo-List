@@ -1,17 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import s from './TodoList.module.css'
-import {Button} from "react-bootstrap"
+import {Button, ButtonGroup, Row, Col} from "react-bootstrap"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faEdit, faLockOpen, faSave, faTrash, faLock} from '@fortawesome/free-solid-svg-icons'
 
 function TodoList ({ todo, setTodo}) {
+    const [isEdit, setEdit] = useState(false)
+    const [value, setValue] = useState("")
+    const [filtered, setFiltered] = useState(todo)
 
-    const [edit, setEdit] = useState(null)
-    const [value, setValue] = useState()
+    useEffect(()=> {
+        setFiltered(todo)
+    },[todo])
+
+    function todofilter(status) {
+        if(status === 'all') {
+            setFiltered(todo)
+        }else{
+            let newTodo =[...todo].filter(item => item.status === status)
+            setFiltered(newTodo)
+        }
+    }
 
     function deleteTodo(id) {
-        let newTodo = [...todo].filter(item => item.id!==id); //Если id не равно предидущему то задача удалится
+        let newTodo = [...todo].filter(item => item.id!==id); //Если id не равно предыдущему то задача удалится
         setTodo(newTodo) //передаем новое значение TODO
     }
     function statusTodo(id) {
@@ -25,35 +38,57 @@ function TodoList ({ todo, setTodo}) {
         setTodo(newTodo)
     }
     function editTodo (id, title) {
-        setEdit(id)
-        setValue(title)
+        if(title) {
+            setEdit(id)
+            setValue(title)  
+        } else {
+            alert("Введите значение в поле ввода")  
+        } 
     }
     function saveTodo (id) {
         let newTodo = [...todo].map( item => {
-            if (item.id == id) {
+            if (item.id === id) {
                 item.title = value;
             }
             return item
         })
         setTodo(newTodo)
-        setEdit(null)
+        setEdit(false)
+        
     }
-    console.log(todo)
+    // console.log(todo)
     return (
         <div>
+            <Row>
+                <Col className={s.filter}>
+                    <ButtonGroup aria-label="Basic example" className={s.filterBtn}>
+                        <Button variant="secondary" onClick={() => todofilter('all')}>Все</Button>
+                        <Button variant="secondary" onClick={() => todofilter(true)}>Открытые</Button>
+                        <Button variant="secondary" onClick={() => todofilter(false)}>Закрытые</Button>
+                </ButtonGroup>
+                </Col>
+            </Row>
+
             {
-                todo.map( item => (
+                filtered.map( item => (
                     <div key={item.id} className={s.listItems}>
                         {
-                            edit === item.id ? 
+                            isEdit === item.id ? 
                                     <div>
                                         <input onChange={(e) => setValue(e.target.value)} value={value} />
                                     </div> 
                                     :
-                                    <div className={item.status === false ? s.close : ""}>{item.title}</div>
+                                    <div className={item.status === false ? s.close : ""}  style={{
+                                        backgroundColor: item.color,     
+                                        width: '100%',
+                                        maxWidth: '350px',
+                                        maxHeight: '250px',
+                                        wordBreak: 'break-all',
+                                        flexFlow: 'row-wrap'
+                                    }}>{item.title}</div>
                         }
                         {
-                            edit === item.id ? 
+                            isEdit === item.id ? 
                                     <div>
                                         <Button onClick={() => saveTodo(item.id)}> <FontAwesomeIcon icon={faSave}/> </Button>
                                     </div> :
