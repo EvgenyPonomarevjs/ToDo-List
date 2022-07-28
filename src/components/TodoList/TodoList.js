@@ -71,28 +71,37 @@ function TodoList ({ todo, setTodo}) {
 
             {
                 filtered.map( item => (
-                    <div key={item.id} className={s.listItems}>
+                    <div key={item.id} className={s.listItems} >
                         {
                             isEdit === item.id ? 
                                     <div>
                                         <input onChange={(e) => setValue(e.target.value)} value={value} />
                                     </div> 
                                     :
-                                    <div className={item.status === false ? s.close : ""}  style={{
+                                    <div className={item.status === false ? s.closeP : ""} style={{
                                         backgroundColor: item.color,     
                                         width: '100%',
-                                        maxWidth: '350px',
-                                        maxHeight: '250px',
+                                        maxWidth: '400px',
+                                        minHeight: '100px',
                                         wordBreak: 'break-all',
-                                        flexFlow: 'row-wrap'
-                                    }}>{item.title}</div>
+                                        flexFlow: 'row-wrap',
+                                        marginRight: "10px",
+                                        borderRadius: "1%"
+                                    }}> <div className={s.task}><h4>Задача:</h4></div>
+                                        <p style={{
+                                        padding: "10px",
+                                        margin: "4px",
+                                        minHeight: '100px',
+                                        paddingLeft: "15px",
+                                    }
+                                    }>{item.title}</p></div>
                         }
                         {
                             isEdit === item.id ? 
                                     <div>
                                         <Button onClick={() => saveTodo(item.id)}> <FontAwesomeIcon icon={faSave}/> </Button>
                                     </div> :
-                                    <div>
+                                    <div className={s.wrapBtn}>
                                         <Button onClick={ () =>deleteTodo(item.id)}> <FontAwesomeIcon icon={faTrash}/> </Button>
                                         <Button onClick={ () =>editTodo(item.id, item.title)} className={s.btn}> <FontAwesomeIcon icon={faEdit}/> </Button>
                                         <Button onClick={ () =>statusTodo(item.id)} className={s.btn}>

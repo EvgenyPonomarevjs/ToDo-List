@@ -1,23 +1,53 @@
+body {
+    background-image: url(/public/fonTODO.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 .btn {
     margin-left: 12px;
 }
 .listItems {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
     flex-direction: row;
     margin-top: 24px;
     padding: 6px;
     font-size: 24px;
+    text-align: center;
+    
 }
-
+.task {
+    margin-top: 10px;
+    font-size: 24px;
+    font-weight: 400;
+    color: black;
+    text-align: center;
+}
+.task h4 {
+    font-size: 24px;
+    font-weight: 400;
+    color: black;
+}
 .listItems:hover {
-    background-color: #ff9797;
-    border-radius: 6px;
+    background-color: #708090;
+    border-radius: 1px;
 }
-.close {
-    color: red;
-    text-decoration: line-through;
+.closeP,.task h4 {
+    font-size: 24px;
+    font-weight: 400;
+    color: black;
+}
+.closeP {
+    display: block;
+    background-image: url(/public/kisspng-letstock.jpg);
+    background-size: cover;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    font-size: 30px;
+    font-weight: 900;
+    font-style: inherit;
+    text-align: center;
 }
 .filter {
     display: flex;
@@ -29,8 +59,8 @@
 }
 .itemsList {
     width: 100%;
-    max-width: 350px;
-    max-height: 250px;
-    word-break:break-all;
+    min-width: 250px;
+    min-height: 250px;
+    word-break:break-word;
     flex-flow: row wrap;
 }
